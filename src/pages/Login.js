@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../globalStyles";
+import Footer from "../components/Footer";
 const Container = styled.div`
   height: 100vh;
 `;
@@ -64,6 +65,7 @@ export default function Login() {
           </Form>
         </Wrapper>
       </Main>
+      <Footer />
     </Container>
   );
 }
