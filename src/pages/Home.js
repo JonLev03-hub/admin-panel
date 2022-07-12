@@ -1,7 +1,6 @@
 import Sidebar from "../components/Sidebar";
 import styled from "styled-components";
 import { colors } from "../globalStyles";
-import Navbar from "../components/Navbar";
 const Container = styled.div`
   width: 90vw;
   padding: 0 10vw;
@@ -14,9 +13,7 @@ export default function Home() {
     <>
       <Container>
         <Sidebar />
-        <Main>
-          <Navbar />
-        </Main>
+        <Main></Main>
       </Container>
     </>
   );
