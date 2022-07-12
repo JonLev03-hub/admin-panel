@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { colors } from "../globalStyles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dashboard,
   TrendingUp,
   Storefront,
   Person,
   CreditCard,
+  Summarize,
+  Menu,
 } from "@mui/icons-material";
 const Container = styled.div`
   position: absolute;
@@ -51,7 +53,6 @@ const Title = styled.span`
   font-weight: 18px;
   color: grey;
 `;
-const Page = styled.div``;
 const NavList = styled.ul`
   list-style: none;
   padding-left: 20px;
@@ -73,40 +74,78 @@ const NavOption = styled.li`
     margin-right: 10px;
   }
 `;
-
+const Button = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  display: none;
+  @media (max-width: 700px) {
+    display: block;
+  }
+`;
 export default function Sidebar() {
-  const [open, setOpen] = useState(true);
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const toggleNav = () => {
+    setToggleMenu(!toggleMenu);
+  };
+
+  useEffect(() => {
+    const changeWidth = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", changeWidth);
+
+    return () => {
+      window.removeEventListener("resize", changeWidth);
+    };
+  }, []);
+
   return (
-    <Container>
-      <Profile>
-        <ProfileIcon />
-        <TextContainer>
-          <Name>Jonathan Leverenz</Name>
-          <Title>General Manager</Title>
-        </TextContainer>
-      </Profile>
-      <NavList>
-        <NavOption>
-          <Dashboard />
-          Dashboard
-        </NavOption>
-        <NavOption>
-          <TrendingUp />
-          Statistics
-        </NavOption>
-        <NavOption>
-          <Storefront />
-          Products
-        </NavOption>
-        <NavOption>
-          <Person />
-          Users
-        </NavOption>
-        <NavOption>
-          <CreditCard />
-          Transactions
-        </NavOption>
-      </NavList>
-    </Container>
+    <>
+      {(toggleMenu || screenWidth > 700) && (
+        <Container>
+          <Profile>
+            <ProfileIcon />
+            <TextContainer>
+              <Name>Jonathan Leverenz</Name>
+              <Title>General Manager</Title>
+            </TextContainer>
+          </Profile>
+          <NavList>
+            <NavOption>
+              <Dashboard />
+              Dashboard
+            </NavOption>
+            <NavOption>
+              <TrendingUp />
+              Statistics
+            </NavOption>
+            <NavOption>
+              <Storefront />
+              Products
+            </NavOption>
+            <NavOption>
+              <Person />
+              Users
+            </NavOption>
+            <NavOption>
+              <CreditCard />
+              Transactions
+            </NavOption>
+            <NavOption>
+              <Summarize />
+              Reports
+            </NavOption>
+          </NavList>
+        </Container>
+      )}
+      <Button onClick={toggleNav}>
+        <Menu sx={{ "font-size": "50px" }} />
+      </Button>
+    </>
   );
 }
